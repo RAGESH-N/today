@@ -1,0 +1,41 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Your Cart</h2>
+  <div *ngIf="cartItems.length === 0" class="text-center">
+    <p>Your cart is empty.</p>
+  </div>
+  <div *ngIf="cartItems.length > 0">
+    <table class="table mb-3">
+      <thead>
+        <tr>
+          <th>Dish</th>
+          <th>Restaurant</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Item Total</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cartItems">
+          <td>{{ item.dishName }}</td>
+          <td>{{ item.restaurantName }}</td>
+          <td>₹{{ item.price }}</td>
+          <td>
+            <input type="number" min="1" [(ngModel)]="item.quantity" (change)="updateQuantity(item, item.quantity)" style="width: 60px;">
+          </td>
+          <td>₹{{ item.price * (item.quantity || 1) }}</td>
+          <td>
+            <button class="btn btn-sm btn-danger" (click)="removeItem(item)">
+              Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="mb-3 text-end"><strong>Total: ₹{{ totalPrice }}</strong></div>
+    <div class="d-flex justify-content-between">
+      <button class="btn btn-danger" (click)="clearCart()">Clear Cart</button>
+      <button class="btn btn-success" (click)="proceedToPayment()">Proceed to Payment</button>
+    </div>
+  </div>
+</div>
